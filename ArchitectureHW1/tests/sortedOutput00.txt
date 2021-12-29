@@ -1,0 +1,2 @@
+Sorted container:
+Container contains 0 elements.

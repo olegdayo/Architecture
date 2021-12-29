@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+ArchitectureHW4/main.nasm
+cmake-build-debug/
+cmake-build-release/
+__pycache__/
+target/
