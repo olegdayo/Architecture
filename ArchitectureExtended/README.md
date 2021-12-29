@@ -1,4 +1,4 @@
-# Concurrency extended homework
+# Some GoLang features I decided to try.
 
 ![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureExtended/meme.png)
 
