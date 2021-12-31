@@ -1,5 +1,7 @@
 use std::fs::File;
 use std::io::Write;
+use rand::Rng;
+use rand::rngs::ThreadRng;
 use crate::matrices::base_matrix::BaseMatrix;
 
 pub struct LowerTriangularMatrix {
@@ -14,7 +16,14 @@ impl BaseMatrix for LowerTriangularMatrix {
     }
 
     fn random_input(&mut self) {
-        todo!()
+        let mut gen: ThreadRng = rand::thread_rng();
+        let rand_num: usize = gen.gen();
+
+        self.size = gen.gen_range(1..101);
+        self.elems_count = self.size * (self.size + 1) / 2;
+        for i in 0..self.elems_count {
+            self.elems.push(gen.gen_range(-1000.0..1000.0));
+        }
     }
 
     fn output(&self, mut file: &mut File) {

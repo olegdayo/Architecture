@@ -1,5 +1,7 @@
 use std::fs::File;
 use std::io::Write;
+use rand::Rng;
+use rand::rngs::ThreadRng;
 use crate::matrices::base_matrix::BaseMatrix;
 
 pub struct DiagonalMatrix {
@@ -13,7 +15,13 @@ impl BaseMatrix for DiagonalMatrix {
     }
 
     fn random_input(&mut self) {
-        todo!()
+        let mut gen: ThreadRng = rand::thread_rng();
+        let rand_num: usize = gen.gen();
+
+        self.size = gen.gen_range(1..101);
+        for i in 0..self.size {
+            self.diag.push(gen.gen_range(-1000.0..1000.0));
+        }
     }
 
     fn output(&self, mut file: &mut File) {

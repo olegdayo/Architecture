@@ -31,12 +31,12 @@ pub mod container {
         fn random_input(&mut self) {
             for i in 0..self.size {
                 let b: Box<dyn BaseMatrix>;
-                let mut range: ThreadRng = rand::thread_rng();
-                let rand_num: i32 = range.gen();
+                let mut gen: ThreadRng = rand::thread_rng();
+                let rand_num: i32 = gen.gen_range(0..3);
 
-                if rand_num % 3 == 0 {
+                if rand_num == 0 {
                     b = Box::new(Matrix{size: 0, matr: Vec::new()});
-                } else if rand_num % 3 == 1 {
+                } else if rand_num == 1 {
                     b = Box::new(DiagonalMatrix{size: 0, diag: Vec::new()});
                 } else {
                     b = Box::new(LowerTriangularMatrix{size: 0, elems_count: 0, elems: Vec::new()});

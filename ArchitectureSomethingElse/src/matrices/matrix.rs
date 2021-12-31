@@ -1,5 +1,7 @@
 use std::fs::File;
 use std::io::Write;
+use rand::Rng;
+use rand::rngs::ThreadRng;
 use crate::matrices::base_matrix::BaseMatrix;
 
 pub struct Matrix {
@@ -13,7 +15,16 @@ impl BaseMatrix for Matrix {
     }
 
     fn random_input(&mut self) {
-        todo!()
+        let mut gen: ThreadRng = rand::thread_rng();
+        let rand_num: usize = gen.gen();
+
+        self.size = gen.gen_range(1..101);
+        for i in 0..self.size {
+            self.matr.push(Vec::new());
+            for j in 0..self.size {
+                self.matr[i].push(gen.gen_range(-1000.0..1000.0));
+            }
+        }
     }
 
     fn output(&self, mut file: &mut File) {
