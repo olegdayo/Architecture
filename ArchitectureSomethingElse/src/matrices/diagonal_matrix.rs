@@ -1,13 +1,14 @@
 use std::fs::File;
+use std::io::Write;
 use crate::matrices::base_matrix::BaseMatrix;
 
-struct DiagonalMatrix {
+pub struct DiagonalMatrix {
     pub size: usize,
     pub diag: Vec<f64>,
 }
 
 impl BaseMatrix for DiagonalMatrix {
-    fn input(&mut self, file: &File) {
+    fn input(&mut self, mut file: &mut File) {
         todo!()
     }
 
@@ -15,18 +16,18 @@ impl BaseMatrix for DiagonalMatrix {
         todo!()
     }
 
-    fn output(&self, file: &File) {
-        println!("Diagonal matrix with size of {}:", self.size);
+    fn output(&self, mut file: &mut File) {
+        file.write_all(format!("Diagonal matrix with size of {}:", self.size).as_bytes());
 
         for i in 0..self.size {
             for j in 0..self.size {
                 if i == j {
-                    print!("{} ", self.diag[i]);
+                    file.write_all(self.diag[i].to_string().as_bytes());
                 } else {
-                    print!("0 ");
+                    file.write_all("0 ".as_bytes());
                 }
             }
-            println!("");
+            file.write_all("\n".as_bytes());
         }
     }
 

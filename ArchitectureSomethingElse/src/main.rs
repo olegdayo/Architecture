@@ -39,7 +39,7 @@ fn random_input(args: &Vec<String>, cont: &mut Container) {
 
 fn sort_and_output(args: &Vec<String>, cont: &mut Container) {
     let mut file: File = std::fs::File::open(args[3].clone()).unwrap();
-    cont.output(&file);
+    cont.output(&mut file);
 }
 
 fn main() {
