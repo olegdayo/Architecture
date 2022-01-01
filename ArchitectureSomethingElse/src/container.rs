@@ -17,15 +17,33 @@ pub mod container {
     }
 
     pub trait ContainerInterface {
-        fn input(&mut self, file: &mut File);
+        fn input(&mut self, info: &mut [String]);
         fn random_input(&mut self);
         fn output(&self, file: &mut File);
         fn sort(&mut self);
     }
 
     impl ContainerInterface for Container {
-        fn input(&mut self, file: &mut File) {
-            todo!()
+        fn input(&mut self, mut info: &mut [String]) {
+            let mut counter: usize = 0;
+            self.size = info[0].parse().unwrap();
+            info = &mut info[1..];
+            for i in 0..self.size {
+                let matr_type: i32 = info[counter].parse().unwrap();
+                counter += 1;
+                let mut matr: Box<dyn BaseMatrix>;
+
+                if matr_type == 0 {
+                    matr = Box::new(Matrix { size: 0, matr: Vec::new() });
+                } else if matr_type == 1 {
+                    matr = Box::new(DiagonalMatrix { size: 0, diag: Vec::new() });
+                } else {
+                    matr = Box::new(LowerTriangularMatrix { size: 0, elems_count: 0, elems: Vec::new() });
+                }
+
+                self.matrs.push(matr);
+                self.matrs[i].input(info, &mut counter);
+            }
         }
 
         fn random_input(&mut self) {
@@ -35,11 +53,11 @@ pub mod container {
                 let rand_num: i32 = gen.gen_range(0..3);
 
                 if rand_num == 0 {
-                    b = Box::new(Matrix{size: 0, matr: Vec::new()});
+                    b = Box::new(Matrix { size: 0, matr: Vec::new() });
                 } else if rand_num == 1 {
-                    b = Box::new(DiagonalMatrix{size: 0, diag: Vec::new()});
+                    b = Box::new(DiagonalMatrix { size: 0, diag: Vec::new() });
                 } else {
-                    b = Box::new(LowerTriangularMatrix{size: 0, elems_count: 0, elems: Vec::new()});
+                    b = Box::new(LowerTriangularMatrix { size: 0, elems_count: 0, elems: Vec::new() });
                 }
 
                 self.matrs.push(b);

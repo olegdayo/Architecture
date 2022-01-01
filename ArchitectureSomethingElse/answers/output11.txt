@@ -1,0 +1,10 @@
+Container:
+
+Number of matrices: 3
+Usual matrix with size of 0:
+Usual matrix with size of 0:
+Usual matrix with size of 0:
+
+
+And now sorted container:
+

@@ -10,8 +10,18 @@ pub struct Matrix {
 }
 
 impl BaseMatrix for Matrix {
-    fn input(&mut self, mut file: &mut File) {
-        todo!()
+    fn input(&mut self, mut info: &mut [String], index: &mut usize) {
+        self.size = info[*index].parse().unwrap();
+        *index += 1;
+        let mut matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        *index += 1;
+
+        let counter: usize = 0;
+        for i in 0..self.size {
+            for j in 0..self.size {
+                self.matr[i][j] = matr_info[counter].parse().unwrap();
+            }
+        }
     }
 
     fn random_input(&mut self) {
@@ -28,7 +38,7 @@ impl BaseMatrix for Matrix {
     }
 
     fn output(&self, mut file: &mut File) {
-        file.write_all(format!("Usual matrix with size of {}:", self.size).as_bytes());
+        file.write_all(format!("Usual matrix with size of {}:\n", self.size).as_bytes());
 
         for i in 0..self.size {
             for j in 0..self.size {

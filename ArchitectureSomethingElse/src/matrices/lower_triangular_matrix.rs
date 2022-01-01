@@ -11,8 +11,16 @@ pub struct LowerTriangularMatrix {
 }
 
 impl BaseMatrix for LowerTriangularMatrix {
-    fn input(&mut self, mut file: &mut File) {
-        todo!()
+    fn input(&mut self, mut info: &mut [String], index: &mut usize) {
+        self.size = info[*index].parse().unwrap();
+        *index += 1;
+        self.elems_count = self.size * (self.size + 1) / 2;
+        let mut matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        *index += 1;
+
+        for i in 0..self.elems_count {
+            self.elems[i] = matr_info[i].parse().unwrap();
+        }
     }
 
     fn random_input(&mut self) {
@@ -27,7 +35,7 @@ impl BaseMatrix for LowerTriangularMatrix {
     }
 
     fn output(&self, mut file: &mut File) {
-        file.write_all(format!("Lower-triangular matrix with size of {}:", self.size).as_bytes());
+        file.write_all(format!("Lower-triangular matrix with size of {}:\n", self.size).as_bytes());
 
         for i in 0..self.size {
             for j in 0..self.size {
