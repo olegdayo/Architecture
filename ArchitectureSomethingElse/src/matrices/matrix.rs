@@ -13,13 +13,15 @@ impl BaseMatrix for Matrix {
     fn input(&mut self, mut info: &mut [String], index: &mut usize) {
         self.size = info[*index].parse().unwrap();
         *index += 1;
-        let mut matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        let matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
         *index += 1;
 
-        let counter: usize = 0;
+        let mut counter: usize = 0;
         for i in 0..self.size {
+            self.matr.push(Vec::new());
             for j in 0..self.size {
-                self.matr[i][j] = matr_info[counter].parse().unwrap();
+                self.matr[i].push(matr_info[counter].parse::<f64>().unwrap());
+                counter += 1;
             }
         }
     }
@@ -43,6 +45,7 @@ impl BaseMatrix for Matrix {
         for i in 0..self.size {
             for j in 0..self.size {
                 file.write_all(self.matr[i][j].to_string().as_bytes());
+                file.write_all(b" ");
             }
             file.write_all("\n".as_bytes());
         }

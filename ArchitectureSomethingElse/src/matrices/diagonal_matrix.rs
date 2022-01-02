@@ -17,7 +17,7 @@ impl BaseMatrix for DiagonalMatrix {
         *index += 1;
 
         for i in 0..self.size {
-            self.diag[i] = matr_info[i].parse().unwrap();
+            self.diag.push(matr_info[i].parse::<f64>().unwrap());
         }
     }
 
@@ -38,6 +38,7 @@ impl BaseMatrix for DiagonalMatrix {
             for j in 0..self.size {
                 if i == j {
                     file.write_all(self.diag[i].to_string().as_bytes());
+                    file.write_all(b" ");
                 } else {
                     file.write_all("0 ".as_bytes());
                 }

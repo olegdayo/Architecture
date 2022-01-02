@@ -19,7 +19,7 @@ impl BaseMatrix for LowerTriangularMatrix {
         *index += 1;
 
         for i in 0..self.elems_count {
-            self.elems[i] = matr_info[i].parse().unwrap();
+            self.elems.push(matr_info[i].parse::<f64>().unwrap());
         }
     }
 
@@ -41,6 +41,7 @@ impl BaseMatrix for LowerTriangularMatrix {
             for j in 0..self.size {
                 if i >= j {
                     file.write_all(self.elems[i].to_string().as_bytes());
+                    file.write_all(b" ");
                 } else {
                     file.write_all("0 ".as_bytes());
                 }

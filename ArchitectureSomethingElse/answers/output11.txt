@@ -1,9 +1,17 @@
 Container:
 
 Number of matrices: 3
-Usual matrix with size of 0:
-Usual matrix with size of 0:
-Usual matrix with size of 0:
+Usual matrix with size of 2:
+1 2.2 
+3 4 
+Diagonal matrix with size of 3:
+4 0 0 
+0 5 0 
+0 0 6 
+Lower-triangular matrix with size of 3:
+10 0 0 
+11 11 0 
+12 12 12 
 
 
 And now sorted container:
