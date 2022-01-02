@@ -20,7 +20,7 @@ fn input(args: &Vec<String>, cont: &mut Container) {
     if args[1] == "-f" {
         file_input(args, cont);
     } else if args[1] == "-r" {
-        random_input(args, cont);
+        random_input(args, cont, args[2].parse::<usize>().unwrap());
     } else {
         println!("LMAO the arguments are wrong");
     }
@@ -35,10 +35,8 @@ fn file_input(args: &Vec<String>, cont: &mut Container) {
     cont.input(info);
 }
 
-fn random_input(args: &Vec<String>, cont: &mut Container) {
-    let mut gen: ThreadRng = rand::thread_rng();
-    let size: usize = gen.gen();
-    cont.size = size % 10000 + 1;
+fn random_input(args: &Vec<String>, cont: &mut Container, size: usize) {
+    cont.size = size;
     cont.random_input();
 }
 
@@ -48,6 +46,7 @@ fn sort_and_output(args: &Vec<String>, cont: &mut Container) {
     cont.output(&mut file);
     file.write_all(b"\n\nAnd now sorted container:\n\n");
     cont.sort();
+    cont.output(&mut file);
 }
 
 fn main() {

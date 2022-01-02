@@ -26,10 +26,10 @@ pub mod container {
     impl ContainerInterface for Container {
         fn input(&mut self, mut info: &mut [String]) {
             let mut counter: usize = 0;
-            self.size = info[0].parse().unwrap();
+            self.size = info[0].parse::<usize>().unwrap();
             info = &mut info[1..];
             for i in 0..self.size {
-                let matr_type: i32 = info[counter].parse().unwrap();
+                let matr_type: i32 = info[counter].parse::<i32>().unwrap();
                 counter += 1;
                 let mut matr: Box<dyn BaseMatrix>;
 

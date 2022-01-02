@@ -11,7 +11,7 @@ pub struct Matrix {
 
 impl BaseMatrix for Matrix {
     fn input(&mut self, mut info: &mut [String], index: &mut usize) {
-        self.size = info[*index].parse().unwrap();
+        self.size = info[*index].parse::<usize>().unwrap();
         *index += 1;
         let matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
         *index += 1;
@@ -40,7 +40,7 @@ impl BaseMatrix for Matrix {
     }
 
     fn output(&self, mut file: &mut File) {
-        file.write_all(format!("Usual matrix with size of {}:\n", self.size).as_bytes());
+        file.write_all(format!("Usual matrix with size of {} and average element {}:\n", self.size, self.get_average()).as_bytes());
 
         for i in 0..self.size {
             for j in 0..self.size {
