@@ -1,4 +1,4 @@
-module SomeMoreMultiThreading
+module ArchitectureSomeMoreMultiThreading
 
 go 1.17
 
