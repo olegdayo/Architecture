@@ -3,6 +3,7 @@
 ![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureExtended/meme.png)
 
 ### Files:
+- **go.mod(37B)**: description of go module.
 - **main.go(3KB)**: main function which reads, writes, etc...
 - **cont.go(4KB)**: container with all the functions.
 - **baseMatrix.go(250B)**: basic matrix structure with all the functions.
