@@ -52,4 +52,4 @@ Rust is quite a young and promissing languages especially with its really intere
 
 
 ### Conclusion:
-The time feels like *O(L * M * N)*, *L* - number of matrices, *M* and *N* - their sizes. Still need to understand why Rust is slowest language of all for now
+The time feels like *O(L * M * N)*, *L* - number of matrices, *M* and *N* - their sizes. Still need to understand why Rust is slowest language of all for now.
