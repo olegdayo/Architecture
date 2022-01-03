@@ -42,12 +42,12 @@ For your conviniece I created a set of 11 tests via python *FillingScript.py* wi
 ### Comparing to procedure and object-oriented programming:
 Dynamic type programming gives more freedom, however you will pay quite a high cost for it: firstly, the program becomes rather slow, secondly, it is much more harder to catch bugs.
 
-|Number of matrices|  No OOP C++  |   OOP C++   |      Python      |    Go    |  Assembler  |
-|------------------|--------------|-------------|------------------|----------|-------------|
-|1                 |0ms           |2ms          |3ms, 7.32MB       |20ms      |8ms          |
-|10                |2ms           |17ms         |42ms, 8.84MB      |238ms     |12ms         |
-|100               |62ms          |246ms        |1746ms, 26.82MB   |2029ms    |240ms        |
-|1000              |4056ms        |3338ms       |131180ms, 165.44MB|23479ms   |2811ms       |
+|Number of matrices|  No OOP C++  |   OOP C++   |      Python      |    Go    |    Rust    |  Assembler  |
+|------------------|--------------|-------------|------------------|----------|------------|-------------|
+|1                 |0ms           |2ms          |3ms, 7.32MB       |20ms      |62ms        |8ms          |
+|10                |2ms           |17ms         |42ms, 8.84MB      |238ms     |426ms       |12ms         |
+|100               |62ms          |246ms        |1746ms, 26.82MB   |2029ms    |6644ms      |240ms        |
+|1000              |4056ms        |3338ms       |131180ms, 165.44MB|23479ms   |144222ms    |2811ms       |
 
 As we can see from the table, it is clear that interpreted dynamically typed languages are ***much slower*** than the statically typed ones. Also without Object Oriented programming code works quite faster, however on 1000 matrices C-style C++ is slower because in first homework I used fstream.h instead of stdio.h. From my own experience, I know that python uses ***more memory*** because, firstly, it is interpreter, secondly, it has a garbage collector while in C/C++ we delete unused memory with our own hands and, thirdly, collections like lists and dictionaries use more memory and work slower than usual arrays.
 
