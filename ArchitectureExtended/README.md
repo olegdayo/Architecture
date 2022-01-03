@@ -46,12 +46,12 @@ For your conviniece I created a set of 12 tests via python *FillingScript.py* wi
 ### Comparing to dynamic and object-oriented programming:
 Golang has quite a few new ideas like if err != nil instead of try catch blocks and concurrency, so it must be faster than python. However the compilation process of Go is rather complicated: it has 4 phases and even has its own "assembly language". This is the main reason of its slow compilation, comparing with C++ compiler and simple Python interpreter on simple tests.
 
-|Number of matrices|  No OOP C++  |   OOP C++   |      Python      |    Go    |  Assembler  |
-|------------------|--------------|-------------|------------------|----------|-------------|
-|1                 |0ms           |2ms          |3ms, 7.32MB       |20ms      |8ms          |
-|10                |2ms           |17ms         |42ms, 8.84MB      |238ms     |12ms         |
-|100               |62ms          |246ms        |1746ms, 26.82MB   |2029ms    |240ms        |
-|1000              |4056ms        |3338ms       |131180ms, 165.44MB|23479ms   |2811ms       |
+|Number of matrices|  No OOP C++  |   OOP C++   |      Python      |    Go    |    Rust    |  Assembler  |
+|------------------|--------------|-------------|------------------|----------|------------|-------------|
+|1                 |0ms           |2ms          |3ms, 7.32MB       |20ms      |62ms        |8ms          |
+|10                |2ms           |17ms         |42ms, 8.84MB      |238ms     |426ms       |12ms         |
+|100               |62ms          |246ms        |1746ms, 26.82MB   |2029ms    |6644ms      |240ms        |
+|1000              |4056ms        |3338ms       |131180ms, 165.44MB|23479ms   |144222ms    |2811ms       |
 
 Concurrency is ***not*** parallelism, So we didn't get much more efficient program.
 
