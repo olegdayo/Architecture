@@ -19,7 +19,7 @@ use crate::container::container::ContainerInterface;
 fn input(args: &Vec<String>, cont: &mut Container) {
     if args[1] == "-f" {
         file_input(args, cont);
-    } else if args[1] == "-r" {
+    } else if args[1] == "-n" {
         random_input(args, cont, args[2].parse::<usize>().unwrap());
     } else {
         println!("LMAO the arguments are wrong");
