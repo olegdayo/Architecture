@@ -43,7 +43,7 @@ For your conviniece I created a set of 12 tests via python *FillingScript.py* wi
 - for 100 matrices: 2029ms
 - for 1000 matrices: 23479ms
 
-### Comparing to procedure and object-oriented programming:
+### Comparing to dynamic and object-oriented programming:
 Golang has quite a few new ideas like if err != nil instead of try catch blocks and concurrency, so it must be faster than python. However the compilation process of Go is rather complicated: it has 4 phases and even has its own "assembly language". This is the main reason of its slow compilation, comparing with C++ compiler and simple Python interpreter on simple tests.
 
 |Number of matrices|  No OOP C++  |   OOP C++   |      Python      |    Go    |  Assembler  |
