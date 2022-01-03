@@ -3,6 +3,7 @@ package factory
 import (
 	"fmt"
 	"go.uber.org/atomic"
+	"math"
 	"sync"
 )
 
@@ -13,7 +14,28 @@ type PinSharper struct {
 	pinsLeft        atomic.Uint32
 }
 
-func (sharp *PinSharper) run() {
+func NewSharp(checker *PinSharpChecker, pinsLeft atomic.Uint32) *PinSharper {
+	sharp := new(PinSharper)
+	sharp.pinSharpChecker = checker
+	sharp.pinsLeft = pinsLeft
+	return sharp
+}
+
+func (sharp *PinSharper) Run() {
+	sharp.lock.Lock()
+
+	if len(sharp.pins) == 0 {
+		sharp.lock.Unlock()
+		return
+	}
+
+	sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
+	fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f",
+		sharp.pins[len(sharp.pins)-1].curvature,
+		sharp.pins[len(sharp.pins)-1].sharpness)
+
+	sharp.lock.Unlock()
+	sharp.sendPin(sharp.pinSharpChecker)
 }
 
 func (sharp *PinSharper) receivePin(pin *Pin) {

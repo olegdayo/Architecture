@@ -14,6 +14,6 @@ func NewPin(curvature float64, sharpness float64) *Pin {
 	return pin
 }
 
-func (pin *Pin) toString() string {
+func (pin *Pin) ToString() string {
 	return fmt.Sprintf("Pin with curvature: %f and sharpness: %f", pin.curvature, pin.sharpness)
 }
