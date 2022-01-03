@@ -21,11 +21,6 @@
 - IDE: CLion with usage of Rust plugin
 
 ### Command line input guide:
-#### TO compile and run the .go files:
-Use commands ***go run \*.go {args}*** or ***go run . {args}*** for all the files to execute. The error will appear if you try to run only main.go!
-1) Write ***go run \*.go -f [inputFileName].txt [outputFileName].txt*** for the file input.
-2) Write ***go run \*.go -n [number] [outputFileName].txt*** for the random input.
-#### To run the .exe file:
 1) Write ***./ArchitectureSomethingElse -f [inputFileName].txt [outputFileName].txt*** for the file input.
 2) Write ***./ArchitectureSomethingElse -r [number] [outputFileName].txt*** for the random input.
 
