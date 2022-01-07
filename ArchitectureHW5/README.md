@@ -28,15 +28,16 @@ Every activity of any thread is provided with output logs into console, use them
 
 ### Table which shows elapsed time in relation to number of pins:
 
-|  Number of pins  |  Multithread C++  |
-|------------------|-------------------|
-|1                 |0ms                |
-|10                |0ms                |
-|100               |2ms                |
-|1000              |38ms               |
-|10000             |320ms              |
-|100000            |2824ms             |
-|1000000           |29642ms            |
+
+|  Number of pins  |  Multithread C++  |  Multithread Go   |
+|------------------|-------------------|-------------------|
+|1                 |0ms                |0ms                |
+|10                |0ms                |0ms                |
+|100               |2ms                |0ms                |
+|1000              |38ms               |1ms                |
+|10000             |320ms              |10ms               |
+|100000            |2824ms             |64ms               |
+|1000000           |29642ms            |712ms              |
 
 ### Average time:
 - for 1 pin: 0ms
