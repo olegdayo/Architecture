@@ -8,7 +8,6 @@ One day three workers: **Chris the Curvatory checker**, **Susie the Sharpener** 
 ### Files:
 - **main.cpp(3KB)**: main function which reads, writes, creates threads etc...
 - **pin.cpp(355B)/.h(604B)**: pin structure.
-- **baseMatrix.cpp(395B)/.h(649B)**: basic matrix structure with all the functions.
 - **pinCurveChecker.cpp(2KB)/.h(804B)**: pin curvature checker class.
 - **pinSharper.cpp(2KB)/.h(823B)**: grinder man class.
 - **pinSharpChecker.cpp(2KB)/.h(779B)**: sharp checker class.
