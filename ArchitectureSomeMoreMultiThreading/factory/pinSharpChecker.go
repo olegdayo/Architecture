@@ -7,18 +7,24 @@ import (
 )
 
 type PinSharpChecker struct {
-	pins     []*Pin
-	lock     sync.Mutex
+	// Pins which sharpness is currently being checked.
+	pins []*Pin
+	// Thread lock.
+	lock sync.Mutex
+	// Number of total pins, which are still in process of approving / sharpening.
 	pinsLeft *atomic.Uint32
-	ans      []*Pin
+	// The resulting vector of pins.
+	ans []*Pin
 }
 
+// Constructor.
 func NewCheck(pinsLeft *atomic.Uint32) *PinSharpChecker {
 	checker := new(PinSharpChecker)
 	checker.pinsLeft = pinsLeft
 	return checker
 }
 
+// Thread run.
 func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	defer wg.Done()
 	for checker.pinsLeft.Load() > 0 {
@@ -45,6 +51,7 @@ func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	}
 }
 
+// Getting a new pin.
 func (checker *PinSharpChecker) receivePin(pin *Pin) {
 	checker.lock.Lock()
 	// Adding a new pin to our current collection.
@@ -52,6 +59,7 @@ func (checker *PinSharpChecker) receivePin(pin *Pin) {
 	checker.lock.Unlock()
 }
 
+// Giving away an approved pin.
 func (checker *PinSharpChecker) returnPin() {
 	checker.lock.Lock()
 	//fmt.Printf("Sharp checker approved a pin with curvature %f and sharpness %f\n",
@@ -62,9 +70,9 @@ func (checker *PinSharpChecker) returnPin() {
 	checker.lock.Unlock()
 }
 
+// Outputting the answer.
 func (checker *PinSharpChecker) Output() {
 	fmt.Println("\n\nPins, which were successfully sharpened:")
-
 	for i := 0; i < len(checker.ans); i++ {
 		fmt.Printf("%d). %s\n", i, checker.ans[i].ToString())
 	}

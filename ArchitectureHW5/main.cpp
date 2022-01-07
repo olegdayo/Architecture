@@ -21,14 +21,14 @@ void randomFill(int pins_num, std::vector<pin *> *pins) {
     }
 }
 
-// Here the program begins.
+// Here the program starts.
 int main(int argc, char **argv) {
     // Timer.
     time_t start;
     time_t finish;
     start = clock();
 
-    // For true random.
+    // For the true random.
     srand(time(nullptr));
 
     // Default value.
@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
 //        std::cout << i + 1 << ")." << processed_pins[i]->to_string() << '\n';
 //    }
 
-    // Getting resulting time.
+    // Outputting resulting time.
     finish = clock();
     std::cout << "Time elapsed: " << (int) difftime(finish, start) * 1000 / CLOCKS_PER_SEC << "ms" << '\n';
 

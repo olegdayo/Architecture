@@ -24,7 +24,7 @@ public:
     void sendPin(pinSharper *sharp);
 
 private:
-    // Pins which are currently being checked.
+    // Pins which curvature is currently being checked.
     std::vector<pin *> pins_;
     // The grinder man whom curvature checker is going to give pins.
     pinSharper *sharp_;

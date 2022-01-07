@@ -5,13 +5,19 @@ import (
 	"sync"
 )
 
+// Curvature checker class.
 type PinCurveChecker struct {
-	pins       []*Pin
+	// Pins which curvature is currently being checked.
+	pins []*Pin
+	// The grinder man whom curvature checker is going to give pins.
 	pinSharper *PinSharper
-	lock       sync.Mutex
-	pinsLeft   *atomic.Uint32
+	// Thread lock.
+	lock sync.Mutex
+	// Number of total pins, which are still in process of approving / sharpening.
+	pinsLeft *atomic.Uint32
 }
 
+// Constructor.
 func NewCurve(sharp *PinSharper, pinsLeft *atomic.Uint32) *PinCurveChecker {
 	curve := new(PinCurveChecker)
 	curve.pinSharper = sharp
@@ -19,6 +25,7 @@ func NewCurve(sharp *PinSharper, pinsLeft *atomic.Uint32) *PinCurveChecker {
 	return curve
 }
 
+// Thread run.
 func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
 	defer wg.Done()
 	for curve.pinsLeft.Load() > 0 {
@@ -44,6 +51,7 @@ func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
 	}
 }
 
+// Getting a new pin.
 func (curve *PinCurveChecker) ReceivePin(pin *Pin) {
 	curve.lock.Lock()
 	// Adding a new pin to our current collection.
@@ -51,6 +59,7 @@ func (curve *PinCurveChecker) ReceivePin(pin *Pin) {
 	curve.lock.Unlock()
 }
 
+// Giving away an approved pin.
 func (curve *PinCurveChecker) sendPin(sharp *PinSharper) {
 	curve.lock.Lock()
 	//fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",

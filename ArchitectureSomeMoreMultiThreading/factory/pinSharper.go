@@ -7,12 +7,17 @@ import (
 )
 
 type PinSharper struct {
-	pins            []*Pin
+	// Pins which are currently being sharpened.
+	pins []*Pin
+	// The sharp checker whom grinder man is going to give pins.
 	pinSharpChecker *PinSharpChecker
-	lock            sync.Mutex
-	pinsLeft        *atomic.Uint32
+	// Thread lock.
+	lock sync.Mutex
+	// Number of total pins, which are still in process of approving / sharpening.
+	pinsLeft *atomic.Uint32
 }
 
+// Constructor.
 func NewSharp(checker *PinSharpChecker, pinsLeft *atomic.Uint32) *PinSharper {
 	sharp := new(PinSharper)
 	sharp.pinSharpChecker = checker
@@ -20,6 +25,7 @@ func NewSharp(checker *PinSharpChecker, pinsLeft *atomic.Uint32) *PinSharper {
 	return sharp
 }
 
+// Thread run.
 func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 	defer wg.Done()
 	for sharp.pinsLeft.Load() > 0 {
@@ -39,6 +45,7 @@ func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 	}
 }
 
+// Getting a new pin.
 func (sharp *PinSharper) receivePin(pin *Pin) {
 	sharp.lock.Lock()
 	// Adding a new pin to our current collection.
@@ -46,6 +53,7 @@ func (sharp *PinSharper) receivePin(pin *Pin) {
 	sharp.lock.Unlock()
 }
 
+// Giving away an approved pin.
 func (sharp *PinSharper) sendPin(checker *PinSharpChecker) {
 	sharp.lock.Lock()
 	//fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",

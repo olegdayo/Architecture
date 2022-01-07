@@ -23,7 +23,7 @@ public:
     void returnPin();
 
 private:
-    // Pins which are currently being checked.
+    // Pins which sharpness is currently being checked.
     std::vector<pin *> pins_;
     // Thread lock.
     std::mutex lock_;
