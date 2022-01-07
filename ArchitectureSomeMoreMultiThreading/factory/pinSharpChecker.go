@@ -9,11 +9,11 @@ import (
 type PinSharpChecker struct {
 	pins     []*Pin
 	lock     sync.Mutex
-	pinsLeft atomic.Uint32
+	pinsLeft *atomic.Uint32
 	ans      []*Pin
 }
 
-func NewCheck(pinsLeft atomic.Uint32, ans []*Pin) *PinSharpChecker {
+func NewCheck(pinsLeft *atomic.Uint32, ans []*Pin) *PinSharpChecker {
 	checker := new(PinSharpChecker)
 	checker.pinsLeft = pinsLeft
 	checker.ans = ans
@@ -22,14 +22,16 @@ func NewCheck(pinsLeft atomic.Uint32, ans []*Pin) *PinSharpChecker {
 
 func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	checker.lock.Lock()
-	defer (*wg).Done()
+	defer wg.Done()
 
 	if len(checker.pins) == 0 {
 		checker.lock.Unlock()
 		return
 	}
 
-	if checker.pins[len(checker.pins)-1].curvature > 0.75 {
+	//fmt.Printf("\n%f\n\n", checker.pins[len(checker.pins)-1].sharpness)
+
+	if checker.pins[len(checker.pins)-1].sharpness > 0.75 {
 		checker.lock.Unlock()
 		checker.returnPin()
 	} else {
@@ -40,6 +42,9 @@ func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	}
 
 	checker.lock.Lock()
+	fmt.Println(len(checker.pins))
+	checker.pins = checker.pins[:len(checker.pins)-1]
+	fmt.Println(len(checker.pins))
 	checker.lock.Unlock()
 }
 
@@ -57,6 +62,5 @@ func (checker *PinSharpChecker) returnPin() {
 		checker.pins[len(checker.pins)-1].sharpness)
 	checker.pinsLeft.Dec()
 	checker.ans = append(checker.ans, checker.pins[len(checker.pins)-1])
-	checker.pins = checker.pins[:len(checker.pins)-1]
 	checker.lock.Unlock()
 }

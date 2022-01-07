@@ -29,9 +29,9 @@ func main() {
 	pinsLeft.Add(numOfPins)
 	ans := make([]*factory.Pin, 0)
 
-	checker := factory.NewCheck(pinsLeft, ans)
-	sharp := factory.NewSharp(checker, pinsLeft)
-	curve := factory.NewCurve(sharp, pinsLeft)
+	checker := factory.NewCheck(&pinsLeft, ans)
+	sharp := factory.NewSharp(checker, &pinsLeft)
+	curve := factory.NewCurve(sharp, &pinsLeft)
 
 	for i := 0; i < int(numOfPins); i++ {
 		curve.ReceivePin(pins[i])
@@ -45,7 +45,8 @@ func main() {
 		go sharp.Run(&wg)
 		go checker.Run(&wg)
 		//fmt.Printf("%d", wg)
-		fmt.Printf("%d\n", pinsLeft.Load())
+		//fmt.Printf("%d\n", pinsLeft.Load())
+		//fmt.Println(len(ans))
 	}
 
 	wg.Wait()

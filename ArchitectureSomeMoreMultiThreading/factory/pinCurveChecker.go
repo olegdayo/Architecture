@@ -10,10 +10,10 @@ type PinCurveChecker struct {
 	pins       []*Pin
 	pinSharper *PinSharper
 	lock       sync.Mutex
-	pinsLeft   atomic.Uint32
+	pinsLeft   *atomic.Uint32
 }
 
-func NewCurve(sharp *PinSharper, pinsLeft atomic.Uint32) *PinCurveChecker {
+func NewCurve(sharp *PinSharper, pinsLeft *atomic.Uint32) *PinCurveChecker {
 	curve := new(PinCurveChecker)
 	curve.pinSharper = sharp
 	curve.pinsLeft = pinsLeft
@@ -22,7 +22,7 @@ func NewCurve(sharp *PinSharper, pinsLeft atomic.Uint32) *PinCurveChecker {
 
 func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
 	curve.lock.Lock()
-	defer (*wg).Done()
+	defer wg.Done()
 
 	if len(curve.pins) == 0 {
 		curve.lock.Unlock()

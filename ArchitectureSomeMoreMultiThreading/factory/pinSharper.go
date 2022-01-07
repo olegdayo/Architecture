@@ -11,10 +11,10 @@ type PinSharper struct {
 	pins            []*Pin
 	pinSharpChecker *PinSharpChecker
 	lock            sync.Mutex
-	pinsLeft        atomic.Uint32
+	pinsLeft        *atomic.Uint32
 }
 
-func NewSharp(checker *PinSharpChecker, pinsLeft atomic.Uint32) *PinSharper {
+func NewSharp(checker *PinSharpChecker, pinsLeft *atomic.Uint32) *PinSharper {
 	sharp := new(PinSharper)
 	sharp.pinSharpChecker = checker
 	sharp.pinsLeft = pinsLeft
@@ -23,7 +23,7 @@ func NewSharp(checker *PinSharpChecker, pinsLeft atomic.Uint32) *PinSharper {
 
 func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 	sharp.lock.Lock()
-	defer (*wg).Done()
+	defer wg.Done()
 
 	if len(sharp.pins) == 0 {
 		sharp.lock.Unlock()
@@ -48,7 +48,7 @@ func (sharp *PinSharper) receivePin(pin *Pin) {
 
 func (sharp *PinSharper) sendPin(checker *PinSharpChecker) {
 	sharp.lock.Lock()
-	fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
+	fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
 		sharp.pins[len(sharp.pins)-1].curvature,
 		sharp.pins[len(sharp.pins)-1].sharpness)
 	checker.receivePin(sharp.pins[len(sharp.pins)-1])
