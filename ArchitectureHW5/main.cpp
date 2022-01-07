@@ -97,7 +97,7 @@ int main(int argc, char **argv) {
 //        std::cout << i + 1 << ")." << processed_pins[i]->to_string() << '\n';
 //    }
 
-    // Outputting resulting time.
+    // Outputting the resulting time.
     finish = clock();
     std::cout << "Time elapsed: " << (int) difftime(finish, start) * 1000 / CLOCKS_PER_SEC << "ms" << '\n';
 

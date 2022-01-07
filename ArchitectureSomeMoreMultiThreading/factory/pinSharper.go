@@ -27,6 +27,7 @@ func NewSharp(checker *PinSharpChecker, pinsLeft *atomic.Uint32) *PinSharper {
 
 // Thread run.
 func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
+	// Worker has done his job.
 	defer wg.Done()
 	for sharp.pinsLeft.Load() > 0 {
 		sharp.lock.Lock()
@@ -39,9 +40,9 @@ func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 
 		// Sharpening the pin.
 		sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
-		//fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
-		//	sharp.pins[len(sharp.pins)-1].curvature,
-		//	sharp.pins[len(sharp.pins)-1].sharpness)
+		// fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
+		// 	 sharp.pins[len(sharp.pins)-1].curvature,
+		//	 sharp.pins[len(sharp.pins)-1].sharpness)
 
 		sharp.lock.Unlock()
 		sharp.sendPin(sharp.pinSharpChecker)
@@ -59,9 +60,9 @@ func (sharp *PinSharper) receivePin(pin *Pin) {
 // Giving away an approved pin.
 func (sharp *PinSharper) sendPin(checker *PinSharpChecker) {
 	sharp.lock.Lock()
-	//fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
-	//	sharp.pins[len(sharp.pins)-1].curvature,
-	//	sharp.pins[len(sharp.pins)-1].sharpness)
+	// fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
+	// 	 sharp.pins[len(sharp.pins)-1].curvature,
+	// 	 sharp.pins[len(sharp.pins)-1].sharpness)
 	// Sending the pin.
 	checker.receivePin(sharp.pins[len(sharp.pins)-1])
 	// The pin was sent.

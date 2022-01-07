@@ -17,7 +17,7 @@ func getPins(numOfPins uint32, pins []*factory.Pin) {
 	// Filling.
 	for i := 0; i < int(numOfPins); i++ {
 		pins[i] = factory.NewPin(rand.Float64(), rand.Float64())
-		//fmt.Printf("%d). %s\n", i, pins[i].ToString())
+		// fmt.Printf("%d). %s\n", i, pins[i].ToString())
 	}
 }
 
@@ -37,7 +37,7 @@ func main() {
 
 	// All the pins.
 	pins := make([]*factory.Pin, numOfPins)
-	//fmt.Println("Pins, which were delivered to fabric:")
+	// fmt.Println("Pins, which were delivered to fabric:")
 	getPins(numOfPins, pins)
 	pinsLeft := atomic.Uint32{}
 	pinsLeft.Add(numOfPins)
@@ -54,16 +54,16 @@ func main() {
 
 	var wg sync.WaitGroup = sync.WaitGroup{}
 	wg.Add(3)
-	// All the workers are starting their deals.
+	// All the workers are concurrently starting their deals.
 	go curve.Run(&wg)
 	go sharp.Run(&wg)
 	go checker.Run(&wg)
-	// Waiting until all workers end doing their deals.
+	// Waiting until all the workers end doing their deals.
 	wg.Wait()
 
 	// Outputting all the qualitative and sharp pins.
-	//checker.Output()
+	// checker.Output()
 
-	// Outputting resulting time.
+	// Outputting the resulting time.
 	fmt.Printf("Total time elapsed: %v\n", time.Since(start))
 }

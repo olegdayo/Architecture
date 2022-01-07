@@ -27,6 +27,7 @@ func NewCurve(sharp *PinSharper, pinsLeft *atomic.Uint32) *PinCurveChecker {
 
 // Thread run.
 func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
+	// Worker has done his job.
 	defer wg.Done()
 	for curve.pinsLeft.Load() > 0 {
 		curve.lock.Lock()
@@ -44,9 +45,9 @@ func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
 			curve.lock.Lock()
 		} else {
 			// Bad pin.
-			//fmt.Printf("Curve checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
-			//	curve.pins[len(curve.pins)-1].curvature,
-			//	curve.pins[len(curve.pins)-1].sharpness)
+			// fmt.Printf("Curve checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
+			//	 curve.pins[len(curve.pins)-1].curvature,
+			//	 curve.pins[len(curve.pins)-1].sharpness)
 			curve.pinsLeft.Dec()
 		}
 
@@ -67,9 +68,9 @@ func (curve *PinCurveChecker) ReceivePin(pin *Pin) {
 // Giving away an approved pin.
 func (curve *PinCurveChecker) sendPin(sharp *PinSharper) {
 	curve.lock.Lock()
-	//fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
-	//	curve.pins[len(curve.pins)-1].curvature,
-	//	curve.pins[len(curve.pins)-1].sharpness)
+	// fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
+	//	 curve.pins[len(curve.pins)-1].curvature,
+	//	 curve.pins[len(curve.pins)-1].sharpness)
 	// Sending the pin.
 	sharp.receivePin(curve.pins[len(curve.pins)-1])
 	curve.lock.Unlock()

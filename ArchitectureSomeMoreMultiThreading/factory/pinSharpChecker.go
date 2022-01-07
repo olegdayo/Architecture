@@ -26,6 +26,7 @@ func NewCheck(pinsLeft *atomic.Uint32) *PinSharpChecker {
 
 // Thread run.
 func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
+	// Worker has done his job.
 	defer wg.Done()
 	for checker.pinsLeft.Load() > 0 {
 		checker.lock.Lock()
@@ -43,9 +44,9 @@ func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 			checker.lock.Lock()
 		} else {
 			// Bad pin.
-			//fmt.Printf("Sharp checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
-			//	checker.pins[len(checker.pins)-1].curvature,
-			//	checker.pins[len(checker.pins)-1].sharpness)
+			// fmt.Printf("Sharp checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
+			//	 checker.pins[len(checker.pins)-1].curvature,
+			//	 checker.pins[len(checker.pins)-1].sharpness)
 			checker.pinsLeft.Dec()
 		}
 
@@ -66,7 +67,7 @@ func (checker *PinSharpChecker) receivePin(pin *Pin) {
 // Giving away an approved pin.
 func (checker *PinSharpChecker) returnPin() {
 	checker.lock.Lock()
-	//fmt.Printf("Sharp checker approved a pin with curvature %f and sharpness %f\n",
+	// fmt.Printf("Sharp checker approved a pin with curvature %f and sharpness %f\n",
 	//	checker.pins[len(checker.pins)-1].curvature,
 	//	checker.pins[len(checker.pins)-1].sharpness)
 	checker.pinsLeft.Dec()
