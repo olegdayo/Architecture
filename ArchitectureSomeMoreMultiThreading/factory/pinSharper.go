@@ -30,11 +30,14 @@ func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 	defer wg.Done()
 	for sharp.pinsLeft.Load() > 0 {
 		sharp.lock.Lock()
+
+		// If worker has no pins for now.
 		if len(sharp.pins) == 0 {
 			sharp.lock.Unlock()
 			continue
 		}
 
+		// Sharpening the pin.
 		sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
 		//fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
 		//	sharp.pins[len(sharp.pins)-1].curvature,
@@ -59,7 +62,9 @@ func (sharp *PinSharper) sendPin(checker *PinSharpChecker) {
 	//fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
 	//	sharp.pins[len(sharp.pins)-1].curvature,
 	//	sharp.pins[len(sharp.pins)-1].sharpness)
+	// Sending the pin.
 	checker.receivePin(sharp.pins[len(sharp.pins)-1])
+	// The pin was sent.
 	sharp.pins = sharp.pins[:len(sharp.pins)-1]
 	sharp.lock.Unlock()
 }

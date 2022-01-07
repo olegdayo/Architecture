@@ -29,23 +29,27 @@ func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	defer wg.Done()
 	for checker.pinsLeft.Load() > 0 {
 		checker.lock.Lock()
+
+		// If worker has no pins for now.
 		if len(checker.pins) == 0 {
 			checker.lock.Unlock()
 			continue
 		}
 
 		if checker.pins[len(checker.pins)-1].sharpness > 0.75 {
+			// Good pin.
 			checker.lock.Unlock()
 			checker.returnPin()
 			checker.lock.Lock()
-
 		} else {
+			// Bad pin.
 			//fmt.Printf("Sharp checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
 			//	checker.pins[len(checker.pins)-1].curvature,
 			//	checker.pins[len(checker.pins)-1].sharpness)
 			checker.pinsLeft.Dec()
 		}
 
+		// The pin was sent.
 		checker.pins = checker.pins[:len(checker.pins)-1]
 		checker.lock.Unlock()
 	}
@@ -66,6 +70,7 @@ func (checker *PinSharpChecker) returnPin() {
 	//	checker.pins[len(checker.pins)-1].curvature,
 	//	checker.pins[len(checker.pins)-1].sharpness)
 	checker.pinsLeft.Dec()
+	// Updating result.
 	checker.ans = append(checker.ans, checker.pins[len(checker.pins)-1])
 	checker.lock.Unlock()
 }
