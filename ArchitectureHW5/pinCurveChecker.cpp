@@ -36,9 +36,9 @@ void pinCurveChecker::run() {
             continue;
         } else {
             // Otherwise, we throw it away.
-            std::cout << "Curve checker disapproved and threw away a pin with curvature " +
-                         std::to_string(pins_.back()->curvature) + " and sharpness " +
-                         std::to_string(pins_.back()->sharpness) + '\n';
+//            std::cout << "Curve checker disapproved and threw away a pin with curvature " +
+//                         std::to_string(pins_.back()->curvature) + " and sharpness " +
+//                         std::to_string(pins_.back()->sharpness) + '\n';
             --(*pins_left_);
         }
 
@@ -73,9 +73,9 @@ void pinCurveChecker::sendPin(pinSharper *sharp) {
     }
 
     // Sending the pin further.
-    std::cout << "Curvature checker approved and gave grinder man a pin with curvature " +
-                 std::to_string(pins_.back()->curvature) + "and sharpness" +
-                 std::to_string(pins_.back()->sharpness) + '\n';
+//    std::cout << "Curvature checker approved and gave grinder man a pin with curvature " +
+//                 std::to_string(pins_.back()->curvature) + "and sharpness" +
+//                 std::to_string(pins_.back()->sharpness) + '\n';
 
     sharp->receivePin(pins_.back());
 

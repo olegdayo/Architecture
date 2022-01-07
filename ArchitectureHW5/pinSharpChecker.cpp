@@ -34,9 +34,9 @@ void pinSharpChecker::run() {
             returnPin();
         } else {
             // Otherwise, we throw it away.
-            std::cout << "Sharp checker disapproved and threw away a pin with curvature " +
-                      std::to_string(pins_.back()->curvature) + " and sharpness " +
-                      std::to_string(pins_.back()->sharpness) + '\n';
+//            std::cout << "Sharp checker disapproved and threw away a pin with curvature " +
+//                      std::to_string(pins_.back()->curvature) + " and sharpness " +
+//                      std::to_string(pins_.back()->sharpness) + '\n';
             --(*pins_left_);
             lock_.unlock();
         }
@@ -65,12 +65,12 @@ void pinSharpChecker::receivePin(pin *pn) {
 void pinSharpChecker::returnPin() {
     lock_.lock();
 
-    std::cout << "Sharp checker approved a pin with curvature " +
-              std::to_string(pins_.back()->curvature) + " and sharpness " +
-              std::to_string(pins_.back()->sharpness) + '\n';
+//    std::cout << "Sharp checker approved a pin with curvature " +
+//              std::to_string(pins_.back()->curvature) + " and sharpness " +
+//              std::to_string(pins_.back()->sharpness) + '\n';
 
     --(*pins_left_);
-    std::cout << *pins_left_ << '\n';
+//    std::cout << *pins_left_ << '\n';
 
     (*ans_).push_back(pins_.back());
     lock_.unlock();

@@ -12,24 +12,24 @@ import (
 func getPins(numOfPins uint32, pins []*factory.Pin) {
 	for i := 0; i < int(numOfPins); i++ {
 		pins[i] = factory.NewPin(rand.Float64(), rand.Float64())
-		fmt.Printf("%d). %s\n", i, pins[i].ToString())
+		//fmt.Printf("%d). %s\n", i, pins[i].ToString())
 	}
 }
 
 func main() {
 	start := time.Now()
+	rand.Seed(start.UnixNano())
 
 	//numArg, _ := strconv.Atoi(os.Args[1])
 	//var numOfPins uint32 = uint32(numArg)
-	var numOfPins uint32 = 10
+	const numOfPins uint32 = 1000000
 	pins := make([]*factory.Pin, numOfPins)
-	fmt.Println("Pins, which were delivered to fabric:")
+	//fmt.Println("Pins, which were delivered to fabric:")
 	getPins(numOfPins, pins)
 	pinsLeft := atomic.Uint32{}
 	pinsLeft.Add(numOfPins)
-	ans := make([]*factory.Pin, 0)
 
-	checker := factory.NewCheck(&pinsLeft, ans)
+	checker := factory.NewCheck(&pinsLeft)
 	sharp := factory.NewSharp(checker, &pinsLeft)
 	curve := factory.NewCurve(sharp, &pinsLeft)
 
@@ -38,29 +38,13 @@ func main() {
 	}
 
 	var wg sync.WaitGroup = sync.WaitGroup{}
-
-	for pinsLeft.Load() > 0 {
-		wg.Add(3)
-		go curve.Run(&wg)
-		go sharp.Run(&wg)
-		go checker.Run(&wg)
-		//fmt.Printf("%d", wg)
-		//fmt.Printf("%d\n", pinsLeft.Load())
-		//fmt.Println(len(ans))
-	}
-
+	wg.Add(3)
+	go curve.Run(&wg)
+	go sharp.Run(&wg)
+	go checker.Run(&wg)
 	wg.Wait()
 
-	for i := 0; i < int(numOfPins); i++ {
-		pins[i] = factory.NewPin(rand.Float64(), rand.Float64())
-		fmt.Printf("%d). %s", i, pins[i].ToString())
-	}
-
-	fmt.Println("\n\nPins, which were successfully sharpened:")
-
-	for i := 0; i < len(ans); i++ {
-		fmt.Printf("%d). %s\n", i, pins[i].ToString())
-	}
+	//checker.Output()
 
 	fmt.Printf("Total time elapsed: %v\n", time.Since(start))
 }

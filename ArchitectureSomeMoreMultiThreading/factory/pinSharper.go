@@ -1,7 +1,6 @@
 package factory
 
 import (
-	"fmt"
 	"go.uber.org/atomic"
 	"math"
 	"sync"
@@ -22,21 +21,22 @@ func NewSharp(checker *PinSharpChecker, pinsLeft *atomic.Uint32) *PinSharper {
 }
 
 func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
-	sharp.lock.Lock()
 	defer wg.Done()
+	for sharp.pinsLeft.Load() > 0 {
+		sharp.lock.Lock()
+		if len(sharp.pins) == 0 {
+			sharp.lock.Unlock()
+			continue
+		}
 
-	if len(sharp.pins) == 0 {
+		sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
+		//fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
+		//	sharp.pins[len(sharp.pins)-1].curvature,
+		//	sharp.pins[len(sharp.pins)-1].sharpness)
+
 		sharp.lock.Unlock()
-		return
+		sharp.sendPin(sharp.pinSharpChecker)
 	}
-
-	sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
-	fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
-		sharp.pins[len(sharp.pins)-1].curvature,
-		sharp.pins[len(sharp.pins)-1].sharpness)
-
-	sharp.lock.Unlock()
-	sharp.sendPin(sharp.pinSharpChecker)
 }
 
 func (sharp *PinSharper) receivePin(pin *Pin) {
@@ -48,9 +48,9 @@ func (sharp *PinSharper) receivePin(pin *Pin) {
 
 func (sharp *PinSharper) sendPin(checker *PinSharpChecker) {
 	sharp.lock.Lock()
-	fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
-		sharp.pins[len(sharp.pins)-1].curvature,
-		sharp.pins[len(sharp.pins)-1].sharpness)
+	//fmt.Printf("Grinder man gave sharp checker a pin with curvature %f and sharpness %f\n",
+	//	sharp.pins[len(sharp.pins)-1].curvature,
+	//	sharp.pins[len(sharp.pins)-1].sharpness)
 	checker.receivePin(sharp.pins[len(sharp.pins)-1])
 	sharp.pins = sharp.pins[:len(sharp.pins)-1]
 	sharp.lock.Unlock()

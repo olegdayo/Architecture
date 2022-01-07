@@ -13,39 +13,36 @@ type PinSharpChecker struct {
 	ans      []*Pin
 }
 
-func NewCheck(pinsLeft *atomic.Uint32, ans []*Pin) *PinSharpChecker {
+func NewCheck(pinsLeft *atomic.Uint32) *PinSharpChecker {
 	checker := new(PinSharpChecker)
 	checker.pinsLeft = pinsLeft
-	checker.ans = ans
 	return checker
 }
 
 func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
-	checker.lock.Lock()
 	defer wg.Done()
+	for checker.pinsLeft.Load() > 0 {
+		checker.lock.Lock()
+		if len(checker.pins) == 0 {
+			checker.lock.Unlock()
+			continue
+		}
 
-	if len(checker.pins) == 0 {
+		if checker.pins[len(checker.pins)-1].sharpness > 0.75 {
+			checker.lock.Unlock()
+			checker.returnPin()
+			checker.lock.Lock()
+
+		} else {
+			//fmt.Printf("Sharp checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
+			//	checker.pins[len(checker.pins)-1].curvature,
+			//	checker.pins[len(checker.pins)-1].sharpness)
+			checker.pinsLeft.Dec()
+		}
+
+		checker.pins = checker.pins[:len(checker.pins)-1]
 		checker.lock.Unlock()
-		return
 	}
-
-	//fmt.Printf("\n%f\n\n", checker.pins[len(checker.pins)-1].sharpness)
-
-	if checker.pins[len(checker.pins)-1].sharpness > 0.75 {
-		checker.lock.Unlock()
-		checker.returnPin()
-	} else {
-		fmt.Printf("Sharp checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
-			checker.pins[len(checker.pins)-1].curvature,
-			checker.pins[len(checker.pins)-1].sharpness)
-		checker.pinsLeft.Dec()
-	}
-
-	checker.lock.Lock()
-	fmt.Println(len(checker.pins))
-	checker.pins = checker.pins[:len(checker.pins)-1]
-	fmt.Println(len(checker.pins))
-	checker.lock.Unlock()
 }
 
 func (checker *PinSharpChecker) receivePin(pin *Pin) {
@@ -57,10 +54,18 @@ func (checker *PinSharpChecker) receivePin(pin *Pin) {
 
 func (checker *PinSharpChecker) returnPin() {
 	checker.lock.Lock()
-	fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
-		checker.pins[len(checker.pins)-1].curvature,
-		checker.pins[len(checker.pins)-1].sharpness)
+	//fmt.Printf("Sharp checker approved a pin with curvature %f and sharpness %f\n",
+	//	checker.pins[len(checker.pins)-1].curvature,
+	//	checker.pins[len(checker.pins)-1].sharpness)
 	checker.pinsLeft.Dec()
 	checker.ans = append(checker.ans, checker.pins[len(checker.pins)-1])
 	checker.lock.Unlock()
+}
+
+func (checker *PinSharpChecker) Output() {
+	fmt.Println("\n\nPins, which were successfully sharpened:")
+
+	for i := 0; i < len(checker.ans); i++ {
+		fmt.Printf("%d). %s\n", i, checker.ans[i].ToString())
+	}
 }

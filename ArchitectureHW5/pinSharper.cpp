@@ -41,9 +41,9 @@ void pinSharper::run() {
             pins_.back()->sharpness = 1;
         }
 
-        std::cout << "Grinder man sharped a pin, now it has curvature " +
-                  std::to_string(pins_.back()->curvature) + " and sharpness " +
-                  std::to_string(pins_.back()->sharpness) << '\n';
+//        std::cout << "Grinder man sharped a pin, now it has curvature " +
+//                  std::to_string(pins_.back()->curvature) + " and sharpness " +
+//                  std::to_string(pins_.back()->sharpness) << '\n';
 
         lock_.unlock();
 
@@ -78,9 +78,9 @@ void pinSharper::sendPin(pinSharpChecker *sharp_check) {
     }
 
     // Sending the pin further.
-    std::cout << "Grinder man gave sharp checker a pin with curvature " +
-              std::to_string(pins_.back()->curvature) + " and sharpness " +
-              std::to_string(pins_.back()->sharpness) + '\n';
+//    std::cout << "Grinder man gave sharp checker a pin with curvature " +
+//              std::to_string(pins_.back()->curvature) + " and sharpness " +
+//              std::to_string(pins_.back()->sharpness) + '\n';
 
     sharp_check->receivePin(pins_.back());
 

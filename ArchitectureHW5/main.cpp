@@ -45,12 +45,12 @@ int main(int argc, char **argv) {
                 pins_left = 10;
             }
         } catch (...) {
-            std::cout << "Something went wrong, putting a default number of unprocessed_pins: 10" << '\n';
+//            std::cout << "Something went wrong, putting a default number of unprocessed_pins: 10" << '\n';
             // Setting default value because of incorrect arguments.
             pins_left = 10;
         }
     } else {
-        std::cout << "Wrong number of arguments, putting a default number of unprocessed_pins: 10" << '\n';
+//        std::cout << "Wrong number of arguments, putting a default number of unprocessed_pins: 10" << '\n';
         // Setting default value cause of incorrect number of arguments.
         pins_left = 10;
     }
@@ -64,13 +64,11 @@ int main(int argc, char **argv) {
     randomFill(pins_left, &unprocessed_pins);
 
     // Outputting all the given pins.
-    std::cout << "Pins, which were delivered to fabric:" << '\n';
-    for (int i = 0; i < pins_left; ++i) {
-        std::cout << i + 1 << ")." << unprocessed_pins[i]->to_string() << '\n';
-    }
-
-    std::cout << '\n' << '\n';
-
+//    std::cout << "Pins, which were delivered to fabric:" << '\n';
+//    for (int i = 0; i < pins_left; ++i) {
+//        std::cout << i + 1 << ")." << unprocessed_pins[i]->to_string() << '\n';
+//    }
+//    std::cout << '\n' << '\n';
     std::atomic<int> counter(pins_left);
 
     // Creating three workers.
@@ -94,14 +92,14 @@ int main(int argc, char **argv) {
     sharpCheckThread.join();
 
     // Outputting all the qualitative and sharp pins.
-    std::cout << '\n' << '\n' << "Pins, which were successfully sharpened:" << '\n';
-    for (int i = 0; i < processed_pins.size(); ++i) {
-        std::cout << i + 1 << ")." << processed_pins[i]->to_string() << '\n';
-    }
+//    std::cout << '\n' << '\n' << "Pins, which were successfully sharpened:" << '\n';
+//    for (int i = 0; i < processed_pins.size(); ++i) {
+//        std::cout << i + 1 << ")." << processed_pins[i]->to_string() << '\n';
+//    }
 
     // Getting resulting time.
     finish = clock();
-    std::cout << "Time elapsed: " << (int)difftime(finish, start) * 1000 / CLOCKS_PER_SEC << "ms" << '\n';
+    std::cout << "Time elapsed: " << (int) difftime(finish, start) * 1000 / CLOCKS_PER_SEC << "ms" << '\n';
 
     return 0;
 }

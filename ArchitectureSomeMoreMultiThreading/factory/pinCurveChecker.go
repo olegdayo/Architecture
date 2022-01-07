@@ -1,7 +1,6 @@
 package factory
 
 import (
-	"fmt"
 	"go.uber.org/atomic"
 	"sync"
 )
@@ -21,27 +20,28 @@ func NewCurve(sharp *PinSharper, pinsLeft *atomic.Uint32) *PinCurveChecker {
 }
 
 func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
-	curve.lock.Lock()
 	defer wg.Done()
-
-	if len(curve.pins) == 0 {
-		curve.lock.Unlock()
-		return
-	}
-
-	if curve.pins[len(curve.pins)-1].curvature < 0.5 {
-		curve.lock.Unlock()
-		curve.sendPin(curve.pinSharper)
+	for curve.pinsLeft.Load() > 0 {
 		curve.lock.Lock()
-	} else {
-		fmt.Printf("Curve checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
-			curve.pins[len(curve.pins)-1].curvature,
-			curve.pins[len(curve.pins)-1].sharpness)
-		curve.pinsLeft.Dec()
-	}
+		if len(curve.pins) == 0 {
+			curve.lock.Unlock()
+			continue
+		}
 
-	curve.pins = curve.pins[:len(curve.pins)-1]
-	curve.lock.Unlock()
+		if curve.pins[len(curve.pins)-1].curvature < 0.5 {
+			curve.lock.Unlock()
+			curve.sendPin(curve.pinSharper)
+			curve.lock.Lock()
+		} else {
+			//fmt.Printf("Curve checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
+			//	curve.pins[len(curve.pins)-1].curvature,
+			//	curve.pins[len(curve.pins)-1].sharpness)
+			curve.pinsLeft.Dec()
+		}
+
+		curve.pins = curve.pins[:len(curve.pins)-1]
+		curve.lock.Unlock()
+	}
 }
 
 func (curve *PinCurveChecker) ReceivePin(pin *Pin) {
@@ -53,9 +53,9 @@ func (curve *PinCurveChecker) ReceivePin(pin *Pin) {
 
 func (curve *PinCurveChecker) sendPin(sharp *PinSharper) {
 	curve.lock.Lock()
-	fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
-		curve.pins[len(curve.pins)-1].curvature,
-		curve.pins[len(curve.pins)-1].sharpness)
+	//fmt.Printf("Curvature checker approved and gave grinder man a pin with curvature %f and sharpness %f\n",
+	//	curve.pins[len(curve.pins)-1].curvature,
+	//	curve.pins[len(curve.pins)-1].sharpness)
 	sharp.receivePin(curve.pins[len(curve.pins)-1])
 	curve.lock.Unlock()
 }
