@@ -28,24 +28,24 @@ Every activity of any thread is provided with output logs into console, use them
 
 ### Table which shows elapsed time in relation to number of pins:
 
-|Number of pins|  Multithread C++  |
-|--------------|-------------------|
-|1             |0ms                |
-|10            |1ms                |
-|100           |14ms               |
-|1000          |138ms              |
-|10000         |1220ms             |
-|100000        |10986ms            |
-|1000000       |98324ms            |
+|  Number of pins  |  Multithread C++  |
+|------------------|-------------------|
+|1                 |0ms                |
+|10                |0ms                |
+|100               |2ms                |
+|1000              |38ms               |
+|10000             |320ms              |
+|100000            |2824ms             |
+|1000000           |29642ms            |
 
 ### Average time:
 - for 1 pin: 0ms
-- for 10 pins: 1ms
-- for 100 pins: 14ms
-- for 1000 pins: 120ms
-- for 10000 pins: 980ms
-- for 100000 pins: 11986ms
-- for 1000000 pins: 98324ms
+- for 10 pins: 0ms
+- for 100 pins: 2ms
+- for 1000 pins: 38ms
+- for 10000 pins: 320ms
+- for 100000 pins: 2824ms
+- for 1000000 pins: 29642ms
 
 ### Conclusion:
 As we can see, the time is almost linear, however with multithreading program works a little bit faster, which is quite a profit for a developer.
