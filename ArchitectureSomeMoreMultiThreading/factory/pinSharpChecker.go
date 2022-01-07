@@ -20,8 +20,9 @@ func NewCheck(pinsLeft atomic.Uint32, ans []*Pin) *PinSharpChecker {
 	return checker
 }
 
-func (checker *PinSharpChecker) Run() {
+func (checker *PinSharpChecker) Run(wg *sync.WaitGroup) {
 	checker.lock.Lock()
+	defer (*wg).Done()
 
 	if len(checker.pins) == 0 {
 		checker.lock.Unlock()

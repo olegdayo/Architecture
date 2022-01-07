@@ -20,8 +20,9 @@ func NewCurve(sharp *PinSharper, pinsLeft atomic.Uint32) *PinCurveChecker {
 	return curve
 }
 
-func (curve *PinCurveChecker) Run() {
+func (curve *PinCurveChecker) Run(wg *sync.WaitGroup) {
 	curve.lock.Lock()
+	defer (*wg).Done()
 
 	if len(curve.pins) == 0 {
 		curve.lock.Unlock()
@@ -31,6 +32,7 @@ func (curve *PinCurveChecker) Run() {
 	if curve.pins[len(curve.pins)-1].curvature < 0.5 {
 		curve.lock.Unlock()
 		curve.sendPin(curve.pinSharper)
+		curve.lock.Lock()
 	} else {
 		fmt.Printf("Curve checker disapproved and threw away a pin with curvature %f and sharpness %f\n",
 			curve.pins[len(curve.pins)-1].curvature,

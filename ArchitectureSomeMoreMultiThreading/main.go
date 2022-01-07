@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go.uber.org/atomic"
 	"math/rand"
+	"sync"
 	"time"
 )
 
@@ -36,11 +37,18 @@ func main() {
 		curve.ReceivePin(pins[i])
 	}
 
+	var wg sync.WaitGroup = sync.WaitGroup{}
+
 	for pinsLeft.Load() > 0 {
-		go curve.Run()
-		go sharp.Run()
-		go checker.Run()
+		wg.Add(3)
+		go curve.Run(&wg)
+		go sharp.Run(&wg)
+		go checker.Run(&wg)
+		//fmt.Printf("%d", wg)
+		fmt.Printf("%d\n", pinsLeft.Load())
 	}
+
+	wg.Wait()
 
 	for i := 0; i < int(numOfPins); i++ {
 		pins[i] = factory.NewPin(rand.Float64(), rand.Float64())

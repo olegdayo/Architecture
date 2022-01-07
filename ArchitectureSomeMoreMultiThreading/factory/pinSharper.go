@@ -21,8 +21,9 @@ func NewSharp(checker *PinSharpChecker, pinsLeft atomic.Uint32) *PinSharper {
 	return sharp
 }
 
-func (sharp *PinSharper) Run() {
+func (sharp *PinSharper) Run(wg *sync.WaitGroup) {
 	sharp.lock.Lock()
+	defer (*wg).Done()
 
 	if len(sharp.pins) == 0 {
 		sharp.lock.Unlock()
@@ -30,7 +31,7 @@ func (sharp *PinSharper) Run() {
 	}
 
 	sharp.pins[len(sharp.pins)-1].sharpness = math.Min(sharp.pins[len(sharp.pins)-1].sharpness*2, 1)
-	fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f",
+	fmt.Printf("Grinder man sharped a pin, now it has curvature %f and sharpness %f\n",
 		sharp.pins[len(sharp.pins)-1].curvature,
 		sharp.pins[len(sharp.pins)-1].sharpness)
 
