@@ -41,7 +41,7 @@ class Matrix(BaseMatrix):
     # Outputting.
     def out(self) -> str:
         ans = 'Size: ' + str(self.__size__) + '\n'
-        ans += 'Average:' + str(self.get_average()) + '\n'
+        ans += 'Average: ' + str(self.get_average()) + '\n'
         ans += 'Matrix:\n'
 
         for i in range(0, self.__size__):

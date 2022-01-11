@@ -35,7 +35,7 @@ class LowerTriangularMatrix(BaseMatrix):
     # Outputting.
     def out(self):
         ans = 'Size: ' + str(self.__size__) + '\n'
-        ans += 'Average:' + str(self.get_average()) + '\n'
+        ans += 'Average: ' + str(self.get_average()) + '\n'
         ans += 'Lower-triangular matrix:\n'
         counter = 0
 

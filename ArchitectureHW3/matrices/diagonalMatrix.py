@@ -30,7 +30,7 @@ class DiagonalMatrix(BaseMatrix):
     # Outputting.
     def out(self):
         ans = 'Size: ' + str(self.__size__) + '\n'
-        ans += 'Average:' + str(self.get_average()) + '\n'
+        ans += 'Average: ' + str(self.get_average()) + '\n'
         ans += 'Diagonal matrix:\n'
 
         for i in range(0, self.__size__):

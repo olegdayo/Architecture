@@ -4,7 +4,7 @@ Number of elements: 3
 
 
 Size: 2
-Average:2.55
+Average: 2.55
 Matrix:
 1.0 2.2 
 3.0 4.0 
@@ -13,7 +13,7 @@ Matrix:
 
 
 Size: 3
-Average:1.6666666666666667
+Average: 1.6666666666666667
 Diagonal matrix:
 4.0 0 0 
 0 5.0 0 
@@ -23,7 +23,7 @@ Diagonal matrix:
 
 
 Size: 3
-Average:8.333333333333334
+Average: 8.333333333333334
 Lower-triangular matrix:
 10.0 0 0 
 11.0 12.0 0 
@@ -37,7 +37,7 @@ Number of elements: 3
 
 
 Size: 3
-Average:1.6666666666666667
+Average: 1.6666666666666667
 Diagonal matrix:
 4.0 0 0 
 0 5.0 0 
@@ -47,7 +47,7 @@ Diagonal matrix:
 
 
 Size: 2
-Average:2.55
+Average: 2.55
 Matrix:
 1.0 2.2 
 3.0 4.0 
@@ -56,7 +56,7 @@ Matrix:
 
 
 Size: 3
-Average:8.333333333333334
+Average: 8.333333333333334
 Lower-triangular matrix:
 10.0 0 0 
 11.0 12.0 0 
