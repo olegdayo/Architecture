@@ -117,8 +117,8 @@ func RandomInput() {
 }
 
 func main() {
-	// Maximum cores of processor used.
-	runtime.GOMAXPROCS(4)
+	// Setting maximum number of threads we need to use.
+	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Truly random generator.
 	rand.Seed(time.Now().UnixNano())
