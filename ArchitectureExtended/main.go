@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ArchitectureExtended/container"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
@@ -51,7 +52,7 @@ func FileInput() {
 
 	// Creating an instance of container.
 	numOfMatrs, _ := strconv.Atoi(lines[0])
-	container := NewCont(numOfMatrs)
+	container := container.NewCont(numOfMatrs)
 	fmt.Println("Container is created!")
 
 	// Filling the container.
@@ -92,7 +93,7 @@ func RandomInput() {
 
 	// Creating an instance of container.
 	numOfMatrs, _ := strconv.Atoi(os.Args[2])
-	container := NewCont(numOfMatrs)
+	container := container.NewCont(numOfMatrs)
 	fmt.Println("Container is created!")
 
 	// Filling the container.
@@ -149,5 +150,5 @@ func main() {
 	fmt.Printf("Total time elapsed: %v\n", time.Since(start))
 
 	// Printing the total memory used.
-	fmt.Printf("Total memory used: %fMB", float64(m.Sys)/1024/1024)
+	fmt.Printf("Total memory used: %fMB\n", float64(m.Sys)/1024/1024)
 }

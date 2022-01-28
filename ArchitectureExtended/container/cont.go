@@ -1,4 +1,4 @@
-package main
+package container
 
 import (
 	"ArchitectureExtended/matrices"
@@ -14,14 +14,14 @@ type Cont struct {
 	// Size.
 	Size int
 	// Container itself
-	Container []matrices.BaseMatrix
+	Container []*Box
 }
 
 // Creating an instance of a container and returning a pointer.
 func NewCont(size int) *Cont {
 	cont := new(Cont)
 	cont.Size = size
-	cont.Container = make([]matrices.BaseMatrix, size)
+	cont.Container = make([]*Box, size)
 	return cont
 }
 
@@ -51,15 +51,15 @@ func (cont *Cont) In(lines []string) {
 			if matrixType == 0 {
 				m := matrices.NewMatrix(size)
 				m.In(lines[j*3+2])
-				cont.Container[j] = m
+				cont.Container[j] = &Box{matrixType: 0, matrix: m}
 			} else if matrixType == 1 {
 				dm := matrices.NewDiagonalMatrix(size)
 				dm.In(lines[j*3+2])
-				cont.Container[j] = dm
+				cont.Container[j] = &Box{matrixType: 1, diagonalMatrix: dm}
 			} else {
 				ltm := matrices.NewLowerTriangularMatrix(size)
 				ltm.In(lines[j*3+2])
-				cont.Container[j] = ltm
+				cont.Container[j] = &Box{matrixType: 2, loweTriangularMatrix: ltm}
 			}
 		}()
 	}
@@ -94,15 +94,15 @@ func (cont *Cont) RandomIn() {
 			if matrixType == 0 {
 				m := matrices.NewMatrix(size)
 				m.RandomIn()
-				cont.Container[j] = m
+				cont.Container[j] = &Box{matrixType: 0, matrix: m}
 			} else if matrixType == 1 {
 				dm := matrices.NewDiagonalMatrix(size)
 				dm.RandomIn()
-				cont.Container[j] = dm
+				cont.Container[j] = &Box{matrixType: 1, diagonalMatrix: dm}
 			} else {
 				ltm := matrices.NewLowerTriangularMatrix(size)
 				ltm.RandomIn()
-				cont.Container[j] = ltm
+				cont.Container[j] = &Box{matrixType: 2, loweTriangularMatrix: ltm}
 			}
 		}()
 	}
