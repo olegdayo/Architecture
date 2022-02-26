@@ -1,6 +1,6 @@
 # Python aka dynamic type programming approach.
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureHW3/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/Python/meme.png)
 
 ### Files:
 - **main.py(2KB)**: main function which reads, writes, etc...
