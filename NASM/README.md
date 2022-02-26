@@ -1,6 +1,6 @@
-# Homework04 for Architecture.
+# NASM aka I really don't wanna do it.
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureHW4/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/NASM/meme.png)
 
 ### Files:
 - **main.cpp(13KB)**: the full HW02 program in one file with more C-style.
