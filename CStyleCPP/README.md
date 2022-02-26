@@ -1,6 +1,6 @@
 # C-style C++ aka procedural approach.
 
-![alt text](https://pbs.twimg.com/media/EFQYKdCW4AABlkl?format=jpg&name=small)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/CStyleCPP/meme.png)
 
 ### Files:
 - **main.cpp(2KB)**: main function which reads, writes, etc...
