@@ -1,4 +1,4 @@
-# Homework03 for Architecture.
+# Python aka dynamic type programming approach.
 
 ![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureHW3/meme.png)
 
