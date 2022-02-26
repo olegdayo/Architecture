@@ -1,4 +1,4 @@
-# Some RustLang stuff I decided to check out.
+# Rust aka Ownership & Borrowing approach.
 
 ![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureSomethingElse/meme.png)
 
