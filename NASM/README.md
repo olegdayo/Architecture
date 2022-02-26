@@ -1,4 +1,4 @@
-# NASM aka I really don't wanna do it.
+# NASM aka system commands level approach.
 
 ![alt text](https://github.com/OFFLUCK/Architecture/blob/master/NASM/meme.png)
 
