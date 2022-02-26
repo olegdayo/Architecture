@@ -1,6 +1,6 @@
-# Homework02 for Architecture.
+# C++ aka OOP approach.
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureHW2/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/CPP/meme.png)
 
 ### Files:
 - **main.cpp(3KB)**: main function which reads, writes, etc...
