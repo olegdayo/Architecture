@@ -1,6 +1,6 @@
-# Some GoLang features I decided to try.
+# Go aka modern procedural approach.
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureExtended/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/Go/meme.png)
 
 ### Files:
 - **go.mod(37B)**: description of go module.
