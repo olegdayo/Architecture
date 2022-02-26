@@ -1,9 +1,9 @@
-# Homework05 for Architecture.
+# Go Multithreading aka goroutines are cool.
 
 ### Preface:
 One day three workers: **Chris the Curvatory checker**, **Susie the Sharpener** and **Ralsei the Reassuring inspector of sharpness** decided that sorting through mountains of pins and even more so communicating with each other during this process is quite tiresomely. So they called their fellow Oleg to develop a console multithread application in *GoLang* which simulates their work and relationship with each other. And here you can observe the result:
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureSomeMoreMultiThreading/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/GoMultithreading/meme.png)
 
 ### Files:
 - **go.mod(86B)**: description of go module.
