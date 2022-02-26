@@ -1,4 +1,4 @@
-# Homework01 for Architecture.
+# C-style C++ aka procedural approach.
 
 ![alt text](https://pbs.twimg.com/media/EFQYKdCW4AABlkl?format=jpg&name=small)
 
