@@ -1,9 +1,9 @@
-# Homework05 for Architecture.
+# CPP multithreading aka threads are cool.
 
 ### Preface:
 One day three workers: **Chris the Curvatory checker**, **Susie the Sharpener** and **Ralsei the Reassuring inspector of sharpness** decided that sorting through mountains of pins and even more so communicating with each other during this process is quite tiresomely. So they called their fellow Oleg to develop a console multithread application in *C++* which simulates their work and relationship with each other. And here you can observe the result:
 
-![alt text](https://github.com/OFFLUCK/Architecture/blob/master/ArchitectureHW5/meme.png)
+![alt text](https://github.com/OFFLUCK/Architecture/blob/master/CPPMultithreading/meme.png)
 
 ### Files:
 - **main.cpp(3KB)**: main function which reads, writes, creates threads etc...
