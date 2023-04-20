@@ -11,11 +11,11 @@ pub struct LowerTriangularMatrix {
 }
 
 impl BaseMatrix for LowerTriangularMatrix {
-    fn input(&mut self, mut info: &mut [String], index: &mut usize) {
+    fn input(&mut self, info: &mut [String], index: &mut usize) {
         self.size = info[*index].parse::<usize>().unwrap();
         *index += 1;
         self.elems_count = self.size * (self.size + 1) / 2;
-        let mut matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        let matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
         *index += 1;
 
         for i in 0..self.elems_count {
@@ -25,29 +25,30 @@ impl BaseMatrix for LowerTriangularMatrix {
 
     fn random_input(&mut self) {
         let mut gen: ThreadRng = rand::thread_rng();
-        let rand_num: usize = gen.gen();
+        let _rand_num: usize = gen.gen();
 
         self.size = gen.gen_range(1..101);
         self.elems_count = self.size * (self.size + 1) / 2;
-        for i in 0..self.elems_count {
+        for _i in 0..self.elems_count {
             self.elems.push(gen.gen_range(-1000.0..1000.0));
         }
     }
 
-    fn output(&self, mut file: &mut File) {
-        file.write_all(format!("Lower-triangular matrix with size of {} and average element {}:\n", self.size, self.get_average()).as_bytes());
+    fn output(&self, file: &mut File) -> Result<(), std::io::Error> {
+        file.write_all(format!("Lower-triangular matrix with size of {} and average element {}:\n", self.size, self.get_average()).as_bytes())?;
 
         for i in 0..self.size {
             for j in 0..self.size {
-                if i >= j {
-                    file.write_all(self.elems[i].to_string().as_bytes());
-                    file.write_all(b" ");
-                } else {
-                    file.write_all("0 ".as_bytes());
+                if i < j {
+                    file.write_all("0 ".as_bytes())?;
+                    continue;
                 }
+                file.write_all(format!("{}, ", self.elems[i]).as_bytes())?;
             }
-            file.write_all("\n".as_bytes());
+            file.write_all(b"\n")?;
         }
+
+        Ok(())
     }
 
     fn get_average(&self) -> f64 {

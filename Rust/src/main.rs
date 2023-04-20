@@ -1,8 +1,7 @@
 mod container;
 mod matrices;
 
-use crate::container::container::Container;
-use crate::container::container::ContainerInterface;
+use crate::container::Container;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::time::{Duration, Instant};
@@ -45,11 +44,11 @@ fn sort_and_output(args: &[String], cont: &mut Container) -> Result<(), std::io:
     let mut file: File = std::fs::File::create(args[3].clone()).unwrap();
 
     file.write_all(b"Container:\n\n")?;
-    cont.output(&mut file);
+    cont.output(&mut file)?;
 
     file.write_all(b"\n\nAnd now sorted container:\n\n")?;
     cont.sort();
-    cont.output(&mut file);
+    cont.output(&mut file)?;
 
     Ok(())
 }
@@ -62,7 +61,7 @@ fn main() -> Result<(), std::io::Error> {
         size: 0,
         matrs: Vec::new(),
     };
-    
+
     println!("{}", cont.size);
     input(&args, cont)?;
     sort_and_output(&args, cont)?;
