@@ -1,8 +1,8 @@
+use crate::matrices::base_matrix::BaseMatrix;
+use rand::rngs::ThreadRng;
+use rand::Rng;
 use std::fs::File;
 use std::io::Write;
-use rand::Rng;
-use rand::rngs::ThreadRng;
-use crate::matrices::base_matrix::BaseMatrix;
 
 pub struct LowerTriangularMatrix {
     pub size: usize,
@@ -15,7 +15,10 @@ impl BaseMatrix for LowerTriangularMatrix {
         self.size = info[*index].parse::<usize>().unwrap();
         *index += 1;
         self.elems_count = self.size * (self.size + 1) / 2;
-        let matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        let matr_info: Vec<String> = info[*index]
+            .split(' ')
+            .map(|s: &str| s.to_string())
+            .collect();
         *index += 1;
 
         for i in 0..self.elems_count {
@@ -35,7 +38,14 @@ impl BaseMatrix for LowerTriangularMatrix {
     }
 
     fn output(&self, file: &mut File) -> Result<(), std::io::Error> {
-        file.write_all(format!("Lower-triangular matrix with size of {} and average element {}:\n", self.size, self.get_average()).as_bytes())?;
+        file.write_all(
+            format!(
+                "Lower-triangular matrix with size of {} and average element {}:\n",
+                self.size,
+                self.get_average()
+            )
+            .as_bytes(),
+        )?;
 
         for i in 0..self.size {
             for j in 0..self.size {

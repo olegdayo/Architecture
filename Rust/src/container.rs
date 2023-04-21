@@ -1,17 +1,17 @@
-use crate::matrices::base_matrix::BaseMatrix;
 use rand::rngs::ThreadRng;
 use rand::Rng;
 use std::fs::File;
 use std::io::Write;
 
-use crate::matrices::diagonal_matrix::DiagonalMatrix;
-
-use crate::matrices::lower_triangular_matrix::LowerTriangularMatrix;
-use crate::matrices::matrix::Matrix;
+use crate::matr::Matr;
+use crate::matrices::{
+    base_matrix::BaseMatrix, diagonal_matrix::DiagonalMatrix,
+    lower_triangular_matrix::LowerTriangularMatrix, matrix::Matrix,
+};
 
 pub struct Container {
     pub size: usize,
-    pub matrs: Vec<Box<dyn BaseMatrix>>,
+    pub matrs: Vec<Matr>,
 }
 
 impl Container {
@@ -22,25 +22,22 @@ impl Container {
         for i in 0..self.size {
             let matr_type: i32 = info[counter].parse::<i32>().unwrap();
             counter += 1;
-            let matr: Box<dyn BaseMatrix>;
 
-            if matr_type == 0 {
-                matr = Box::new(Matrix {
+            let matr = match matr_type {
+                0 => Matr::Matrix(Matrix {
                     size: 0,
                     matr: Vec::new(),
-                });
-            } else if matr_type == 1 {
-                matr = Box::new(DiagonalMatrix {
+                }),
+                1 => Matr::DiagonalMatrix(DiagonalMatrix {
                     size: 0,
                     diag: Vec::new(),
-                });
-            } else {
-                matr = Box::new(LowerTriangularMatrix {
+                }),
+                _ => Matr::LowerTriangularMatrix(LowerTriangularMatrix {
                     size: 0,
                     elems_count: 0,
                     elems: Vec::new(),
-                });
-            }
+                }),
+            };
 
             self.matrs.push(matr);
             self.matrs[i].input(info, &mut counter);
@@ -49,29 +46,26 @@ impl Container {
 
     pub fn random_input(&mut self) {
         for i in 0..self.size {
-            let b: Box<dyn BaseMatrix>;
             let mut gen: ThreadRng = rand::thread_rng();
-            let rand_num: i32 = gen.gen_range(0..3);
+            let matr_type: i32 = gen.gen_range(0..3);
 
-            if rand_num == 0 {
-                b = Box::new(Matrix {
+            let matr = match matr_type {
+                0 => Matr::Matrix(Matrix {
                     size: 0,
                     matr: Vec::new(),
-                });
-            } else if rand_num == 1 {
-                b = Box::new(DiagonalMatrix {
+                }),
+                1 => Matr::DiagonalMatrix(DiagonalMatrix {
                     size: 0,
                     diag: Vec::new(),
-                });
-            } else {
-                b = Box::new(LowerTriangularMatrix {
+                }),
+                _ => Matr::LowerTriangularMatrix(LowerTriangularMatrix {
                     size: 0,
                     elems_count: 0,
                     elems: Vec::new(),
-                });
-            }
+                }),
+            };
 
-            self.matrs.push(b);
+            self.matrs.push(matr);
             self.matrs[i].random_input();
         }
     }

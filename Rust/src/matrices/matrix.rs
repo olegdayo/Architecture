@@ -1,8 +1,8 @@
+use crate::matrices::base_matrix::BaseMatrix;
+use rand::rngs::ThreadRng;
+use rand::Rng;
 use std::fs::File;
 use std::io::Write;
-use rand::Rng;
-use rand::rngs::ThreadRng;
-use crate::matrices::base_matrix::BaseMatrix;
 
 pub struct Matrix {
     pub size: usize,
@@ -13,7 +13,10 @@ impl BaseMatrix for Matrix {
     fn input(&mut self, info: &mut [String], index: &mut usize) {
         self.size = info[*index].parse::<usize>().unwrap();
         *index += 1;
-        let matr_info: Vec<String> = info[*index].split(' ').map(|s: &str| s.to_string()).collect();
+        let matr_info: Vec<String> = info[*index]
+            .split(' ')
+            .map(|s: &str| s.to_string())
+            .collect();
         *index += 1;
 
         let mut counter: usize = 0;
@@ -40,7 +43,14 @@ impl BaseMatrix for Matrix {
     }
 
     fn output(&self, file: &mut File) -> Result<(), std::io::Error> {
-        file.write_all(format!("Usual matrix with size of {} and average element {}:\n", self.size, self.get_average()).as_bytes())?;
+        file.write_all(
+            format!(
+                "Usual matrix with size of {} and average element {}:\n",
+                self.size,
+                self.get_average()
+            )
+            .as_bytes(),
+        )?;
 
         for i in 0..self.size {
             for j in 0..self.size {
