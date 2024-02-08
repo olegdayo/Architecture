@@ -1,10 +1,13 @@
 #!/bin/sh
+
 set -e
-help(){
+
+function help {
   echo "$1: Uses g++ and objconv to convert a C program to nasm"
   echo "usage: $1 <sourcefile.c>"
   exit 0
 }
+
 [ -z "$1" ] || [ "$1" == "-h" ] && help "$(basename "$0")"
 
 C_FILE="$1"
